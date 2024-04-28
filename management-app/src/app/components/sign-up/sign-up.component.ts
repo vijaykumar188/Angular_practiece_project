@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { ApiServiceService } from 'src/app/service/api-service.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -10,7 +11,7 @@ import { Router } from '@angular/router';
 export class SignUpComponent {
  
   
-    constructor(private router: Router, private snackbar: MatSnackBar) { }
+    constructor(private router: Router, private snackbar: MatSnackBar,private apiService:ApiServiceService) { }
   
   
     email: any;
@@ -38,6 +39,19 @@ export class SignUpComponent {
   
   
     signUpClick() {
+      const payload = {
+        "email": this.email,
+        "password": this.password,
+        "name": this.name,
+        "phone": this.phone
+      }
+
+      console.log(payload);
+      
+      this.apiService.updateUsersData(payload).subscribe(res => {
+        console.log(res);
+        
+      })
       localStorage.setItem('userEmail', this.email);
       localStorage.setItem('userpassword', this.password);
       localStorage.setItem('userName', this.name);

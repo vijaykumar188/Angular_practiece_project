@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { ApiServiceService } from 'src/app/service/api-service.service';
 // import { AuthService } from 'src/app/service/auth.service';
-// import Swal from 'sweetalert2';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -10,10 +11,10 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
 
-constructor(private router:Router,private snackbar:MatSnackBar){}
+  constructor(private router: Router, private snackbar: MatSnackBar, private apiService: ApiServiceService) { }
 
-  email:any;
-  password:any;
+  email: any;
+  password: any;
   errorMessage!: string;
 
 
@@ -27,44 +28,40 @@ constructor(private router:Router,private snackbar:MatSnackBar){}
     return passwordRegex.test(password);
   }
 
-  clickSignup(){
+  clickSignup() {
     this.router.navigate(['/signup'])
   }
 
-  formValidate(){
-    if(this.isValidEmail(this.email) === true && this.password){
+  formValidate() {
+    if (this.isValidEmail(this.email) === true && this.password) {
       return false;
-    }else{
+    } else {
       return true;
     }
   }
 
-  login(){
-    
-    let userDataEmail = localStorage.getItem('userEmail')
-    let userDataPassword = localStorage.getItem('userpassword')
-   
-  //  if(userDataEmail === this.email && userDataPassword === this.password){
-    this.router.navigate(['/dashboard'])
-    // Swal.fire('Logged In','Login succesfully','success')
-    this.snackbar.open('Login succesfully', '',{panelClass: 'snackbar',duration:3000,verticalPosition:'top'})
-    this.reset()
-  //  }else{
-    // Swal.fire('Invllid passsword')
-    // this.snackbar.open('Invllid passsword', '',{panelClass: 'snackbar',duration:3000,verticalPosition:'top'})
-    // this.reset();
-  //  }
-   }
+  login() {
+    this.apiService.getUsersData().subscribe(res => {
+      const users = res.find((a: any) => {
+        return a.email === this.email && a.password === this.password
+      })
+      if (users) {
+        this.router.navigate(['/dashboard'])
+        Swal.fire('Logged In', 'Login succesfully', 'success')
+        this.reset()
+      } else {
+        Swal.fire('Invllid passsword')
+        this.reset();
+      }
+    })
+  }
 
 
-   reset(){
+  reset() {
     this.email = ''
     this.password = ''
-   }
+  }
 
-   redirectToGitHub(){
-    window.open('https://github.com/vijaykumar188/Deploy-repo')
-   }
-   
-  
+
+
 }

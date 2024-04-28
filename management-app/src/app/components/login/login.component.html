@@ -1,14 +1,11 @@
 <div class="bg-img">
-
-    
-
     <div class="container">
         <h1 class="header"><b>Login</b></h1>
         <div>
             <label for="email" class="header">Email*</label>
             <input type="text" placeholder="Enter Email" id="email" [(ngModel)]="email">
-            <!-- <mat-error *ngIf="email && !isValidEmail(email)" style="margin-top:-20px;">
-                Please enter a valid email. </mat-error> -->
+            <mat-error *ngIf="email && !isValidEmail(email)" style="margin-top:-20px;color: red;" >
+                Please enter a valid email. </mat-error>
         </div>
         <div>
             <label for="psw" class="header" style="padding-top: 20px;">Password*</label>
@@ -22,8 +19,5 @@
                 <button type="submit" class="btn btn-primary" style="margin-left:10px" (click)="clickSignup()">SIGN UP</button>
             </div>
         </div>
-
-     
     </div>
-   
 </div>

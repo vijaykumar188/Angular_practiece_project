@@ -1,0 +1,28 @@
+{
+  "users": [
+    {
+      "email": "vijisnv47@gmail.com",
+      "password": "Vijay@888",
+      "name": "vijay",
+      "phone": "8660229216",
+      "id": 1
+    },
+    {
+      "email": "vijisnv97@gmail.com",
+      "password": "Vijay@123",
+      "name": "vijay",
+      "phone": "8660229216",
+      "id": 2
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}
